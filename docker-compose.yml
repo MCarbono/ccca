@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14.1-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ccca08
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./create.sql:/docker-entrypoint-initdb.d/create.sql
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
