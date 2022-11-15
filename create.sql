@@ -67,3 +67,9 @@ create table ccca.stock_entry (
 	operation text,
 	quantity integer
 );
+
+create table ccca.order_projection(
+	cpf text primary key,
+	code text, 
+	data jsonb
+)
