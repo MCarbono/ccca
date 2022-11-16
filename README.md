@@ -12,7 +12,7 @@
 <a id="About"></a> 
 ## About 
 
-This is a basic e-commerce api project created to practice the concepts about clean architecture, ports and adapters, event-driven architecture and domain driven design. This code was developed based in the course called "Clean Code e Clean Architecture"(https://app.branas.io/clean-code-e-clean-architecture). The project contains four microservices (catalog, checkout, freight and stock) and a shared folder that has abstractions from libraries that is used by more than one microservice. 
+This is a basic e-commerce api project created to practice the concepts about clean architecture, ports and adapters, event-driven architecture, CQRS and domain driven design. This code was developed based in the course called "Clean Code e Clean Architecture"(https://app.branas.io/clean-code-e-clean-architecture). The project contains four microservices (catalog, checkout, freight and stock) and a shared folder that has abstractions from libraries that is used by more than one microservice. 
 
 ---
 <a id="Technologies"></a> 
@@ -79,7 +79,7 @@ To start the server, use one of the commands below:
 <a id="Infrastructure"></a> 
 ## Infrastructure
 
-The database used is the Postgres. The message broker is the RabbitMQ. In this project root folder there's a docker-compose file that creates the database and the broker. Run one of the commands below inside the root folder of the project:
+The database used is the Postgres. The message broker is the RabbitMQ. In this project root folder there's a docker-compose file that creates the database and the broker. All of the services runs in their default ports. Run one of the commands below inside the root folder of the project:
 
 ```bash
     # Makefile command
@@ -140,7 +140,7 @@ Use one of the commands below inside the microservice folder.
 
 #### Specific integration tests
 
-The checkout microservice has a specific switch test cases. To run it, you will need to have all the microservices [up](#Run-server) and the [infrastructure](#Infrastructure). It will do an integration test by the checkout's microservice api.
+The checkout microservice has a specific suite test cases. To run it, you will need to have all the microservices [up](#Run-server) and the [infrastructure](#Infrastructure). It will do an integration test by the checkout's microservice api.
 Use one of the commands below inside the checkout microservice folder.
 
 ```bash
