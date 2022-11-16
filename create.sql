@@ -69,7 +69,7 @@ create table ccca.stock_entry (
 );
 
 create table ccca.order_projection(
-	cpf text primary key,
+	cpf text,
 	code text, 
 	data jsonb
 )

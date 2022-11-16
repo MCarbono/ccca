@@ -33,7 +33,7 @@ export default class Checkout {
             if (coupon) order.addCoupon(coupon)
         }
         await this.orderRepository.save(order)
-        await this.queue.publish("orderPlaced", new OrderPlaced(order))
+        await this.queue.publish("orderPlaced", new OrderPlaced(order, order.getTotal()))
     }
 
     orderItemsIdsToString(orderItems: Input["orderItems"]) {

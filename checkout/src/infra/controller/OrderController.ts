@@ -24,7 +24,7 @@ export default class OrderController {
         })
 
         httpServer.on("get", "/orders/:cpf", async (params: any, body: any) => {
-            const orders = await getOrdersByCpf.execute(params.cpf)
+            const orders = await getOrdersByCpfQuery.execute(params.cpf)
             return orders
         })
     }

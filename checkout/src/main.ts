@@ -13,6 +13,7 @@ import CouponRepositoryDatabase from "./infra/repository/database/CouponReposito
 import RabbitMQAdapter from "../../shared/queue/RabbitMQAdapter";
 import QueueController from "./infra/controller/QueueController";
 import GetOrdersByCpfQuery from "./application/query/GetOrdersByCpfQuery";
+import OrderProjection from "./application/OrderProjection";
 
 ;
 (async () => {
@@ -27,11 +28,12 @@ import GetOrdersByCpfQuery from "./application/query/GetOrdersByCpfQuery";
     
     const preview = new Preview(orderRepository, getItemGateway, couponRepository, calculateFreightGateway);
     const checkout = new Checkout(orderRepository, getItemGateway, couponRepository, calculateFreightGateway, queue)
+    const orderProjection = new OrderProjection(connection)
     const getOrdersByCpf = new GetOrdersByCpf(orderRepository);
     const getOrdersByCpfQuery = new GetOrdersByCpfQuery(connection)
 
     const httpServer = new ExpressAdapter();
     new OrderController(httpServer, preview, checkout, getOrdersByCpf, getOrdersByCpfQuery, queue);
-    new QueueController(queue, checkout)
+    new QueueController(queue, checkout, orderProjection)
     httpServer.listen(3000);
 })();

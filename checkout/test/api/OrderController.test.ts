@@ -3,7 +3,7 @@ import Queue from "../../../shared/queue/Queue";
 import RabbitMQAdapter from "../../../shared/queue/RabbitMQAdapter";
 import PgPromiseAdapter from "../../src/infra/database/PgPromiseAdapter"
 import OrderRepository from "../../src/infra/repository/database/OrderRepository"
-
+import clearDatabaseTable  from "./ClearDatabase";"../api/ClearDatabase"
 let orderRepositoryDatabase: OrderRepository;
 let connection: PgPromiseAdapter
 let queue: Queue
@@ -14,10 +14,12 @@ beforeEach(async () => {
     queue = new RabbitMQAdapter()
     await queue.connect()
     await orderRepositoryDatabase.clear()
+    await clearDatabaseTable(connection, "ccca.order_projection")
 })
 
 afterEach(async() => {
     await orderRepositoryDatabase.clear()
+    await clearDatabaseTable(connection, "ccca.order_projection")
     await connection.close()
     await queue.close()
 })
@@ -69,9 +71,9 @@ test("Should create an order with an discount coupon", async () => {
     }
     await axios.post("http://localhost:3000/checkout", input)
     await new Promise(resolve => setTimeout(resolve, 500));
-    const order = await axios.get("http://localhost:3000/orders/25955697837")
-    expect(order.data[0].code).toBe("202200000001")
-    expect(order.data[0].total).toBe(5033.672807153502)
+    const response = await axios.get("http://localhost:3000/orders/25955697837")
+    expect(response.data[0].code).toBe("202200000001")
+    expect(response.data[0].data.total).toBe(5033.672807153502)
 })
 
 test("Should create an order without a coupon", async () => {
@@ -87,8 +89,8 @@ test("Should create an order without a coupon", async () => {
     }
     await axios.post("http://localhost:3000/checkout", input)
     await new Promise(resolve => setTimeout(resolve, 500));
-    const order = await axios.get("http://localhost:3000/orders/25955697837")
-    expect(order.data[0].code).toBe("202200000001")
-    expect(order.data[0].total).toBe(6292.091008941878)
+    const response = await axios.get("http://localhost:3000/orders/25955697837")
+    expect(response.data[0].code).toBe("202200000001")
+    expect(response.data[0].data.total).toBe(6292.091008941878)
 })
 
